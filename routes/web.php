@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
 Route::get('/', function () {
     return view('welcome');
+ });
+*/
+
+
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::resource('companies', CompanyController::class);
+    Route::resource('employees', EmployeeController::class);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
